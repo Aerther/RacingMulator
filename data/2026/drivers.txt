@@ -2,7 +2,7 @@
 1;Lando Norris;91;94;92;94;1
 63;George Russell;90;92;89;92;2
 12;Kimi Antonelli;85;84;87;88;2
-3;João G. Pereira;98;97;98;99;3
+3;Max Verstappen;98;97;98;99;3
 6;Isack Hadjar;85;82;86;85;3
 16;Charles Leclerc;94;90;94;95;4
 44;Lewis Hamilton;93;94;92;94;4
