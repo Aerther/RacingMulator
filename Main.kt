@@ -23,7 +23,7 @@ fun main() {
     println("Welcome so RacingMulator")
     var name = input.getPlayerName()
     
-    println("Here is your initial offers")
+    println("Here are your initial offers")
     println("Please, input the offer number you want")
     menu.showOffers(offers)
     
