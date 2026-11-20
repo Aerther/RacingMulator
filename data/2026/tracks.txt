@@ -1,0 +1,30 @@
+1;Bahrain International Circuit;5.412;57;Bahrain
+2;Jeddah Corniche Circuit;6.174;50;Saudi Arabia
+3;Albert Park Circuit;5.278;58;Australia
+4;Suzuka International Racing Course;5.807;53;Japan
+5;Shanghai International Circuit;5.451;56;China
+6;Miami International Autodrome;5.412;57;United States
+7;Circuit de Monaco;3.337;78;Monaco
+8;Circuit de Barcelona-Catalunya;4.657;66;Spain
+9;Red Bull Ring;4.318;71;Austria
+10;Silverstone Circuit;5.891;52;United Kingdom
+11;Circuit de Spa-Francorchamps;7.004;44;Belgium
+12;Hungaroring;4.381;70;Hungary
+13;Circuit Zandvoort;4.259;72;Netherlands
+14;Autodromo Nazionale Monza;5.793;53;Italy
+15;Madrid Circuit;5.416;57;Spain
+16;Baku City Circuit;6.003;51;Azerbaijan
+17;Marina Bay Street Circuit;5.063;61;Singapore
+18;Circuit of the Americas;5.513;56;United States
+19;Autodromo Hermanos Rodriguez;4.304;71;Mexico
+20;Autodromo Jose Carlos Pace;4.309;71;Brazil
+21;Las Vegas Strip Circuit;6.120;50;United States
+22;Lusail International Circuit;5.418;57;Qatar
+23;Yas Marina Circuit;5.554;55;United Arab Emirates
+24;Autodromo Enzo e Dino Ferrari;4.909;63;Italy
+25;Istanbul Park;5.338;58;Turkey
+26;Sepang International Circuit;5.543;56;Malaysia
+27;Hockenheimring;4.574;67;Germany
+28;Nurburgring;5.148;60;Germany
+29;Algarve International Circuit;4.653;66;Portugal
+30;Mugello Circuit;5.245;59;Italy
