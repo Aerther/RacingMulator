@@ -1,7 +1,6 @@
 package models
 
-import enums.TypeCategory
-import models.*
+import models.Result
 
 open class Driver(
     val id: Int,

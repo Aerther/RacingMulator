@@ -3,6 +3,7 @@ import visual.*
 import service.*
 import models.*
 import enums.*
+import constants.STARTER_CATEGORY
 
 var reader = FileReader()
 var menu = Menu()
@@ -13,9 +14,9 @@ var tracks = reader.readTrackFile()
 var categories = reader.readCategoryFile()
 var teams = reader.readTeamsFile(categories)
 var drivers = reader.readDriversFile(teams)
-var offers: MutableList<Offer> = calculation.getStarterOffers(teams)
+var offers: MutableList<Offer> = calculation.getStarterOffers(teams, STARTER_CATEGORY)
 
-var formula = categories.find {it.categoryType == TypeCategory.FORMULA1} ?: categories[0]
+var formula = categories.find {it.categoryType == STARTER_CATEGORY} ?: categories[0]
 var champ = Championship(id = 1, category = formula)
 
 fun main() {
@@ -31,15 +32,47 @@ fun main() {
     var offerChosen = offers.find {it.id == offerNumber} ?: offers[0]
     var team = offerChosen.team
     
+    offers.clear()
+    
     var player = Driver(id = 0, name = name, team = team)
     team.setDriver(player, 2, true)
     drivers.add(player)
     
-    champ.start(tracks, drivers)
+    champ.start(tracks, teams, drivers)
     
-    menu.showDriverStandings(champ)
-    menu.showConstructorStandings(champ)
+    while(true) {
+        menu.showMenu()
+        var number = input.getOption()
+        
+        if(number == 1) {
+            // simulate current race
+        } else if(number == 2) {
+            // see current race
+        } else if(number == 3) {
+            // see drivers championship
+            menu.showDriverStandings(champ)
+        } else if(number == 4) {
+            // see constructor championship
+            menu.showConstructorStandings(champ)
+        } else if(number == 5) {
+            // see calendar of races
+            menu.showCalendarOfRaces(champ)
+        } else if(number == 6) {
+            // see contract offers
+            menu.showOffers(offers)
+        } else if(number == 7) {
+            // see your stats
+        } else if(number == 8) {
+            // see other championships standings
+        } else if(number == 9) {
+            // save
+        } else if(number == 17) {
+            // exit
+            break
+        }
+        
+    }
 }
 
-// kotlinc Main.kt src\utils\*.kt src\visual\*.kt src\models\*.kt src\enums\*.kt src\service\*.kt -include-runtime -d Main.jar
+// kotlinc Main.kt src\constants\*.kt src\utils\*.kt src\visual\*.kt src\models\*.kt src\enums\*.kt src\service\*.kt -include-runtime -d Main.jar
 // java -jar Main.jar

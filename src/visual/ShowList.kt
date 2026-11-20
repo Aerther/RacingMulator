@@ -2,12 +2,11 @@ package visual
 
 import models.*
 import enums.*
-
-fun showConstructorStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
-    var championship = championships.find {it.category.categoryType == categoryType} ?: return
-    var standings = championship.calcConstructorStandings()
     
-    var sortedStanding = standings.toList().sortedByDescending { it.second }
+fun showConstructorStandingsList(champ: Championship) {
+    champ.calcConstructorStandings()
+    
+    var standings = champ.teams.toList().sortedByDescending { it.pointsScored }
     
     println("+----------+--------------------+----------+")
     println("| Position | Team               | Points   |")
@@ -16,11 +15,11 @@ fun showConstructorStandingsList(championships: MutableList<Championship>, categ
     val format = "| %-8d | %-18s | %-8d |"
     
     var position = 1
-    for((team, points) in sortedStanding) {
+    for(team in standings) {
         val formatString = format.format(
             position,
             team.name,
-            points
+            team.pointsScored
         )
         
         println(formatString)
@@ -31,12 +30,16 @@ fun showConstructorStandingsList(championships: MutableList<Championship>, categ
     println("+----------+--------------------+----------+")
 }
 
-fun showDriverStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
+fun showConstructorStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
     var championship = championships.find {it.category.categoryType == categoryType} ?: return
-    var standings = championship.calcDriverStandings()
     
-    // Sorts is based on the highest points
-    val sortedStandings = standings.toList().sortedByDescending { it.second }
+    showConstructorStandingsList(championship)
+}
+
+fun showDriverStandingsList(champ: Championship) {
+    champ.calcDriverStandings()
+    
+    val standings = champ.drivers.toList().sortedByDescending { it.pointsScored }
     
     println("+----------+----------------------+--------------------+----------+")
     println("| Position | Driver               | Team               | Points   |")
@@ -45,12 +48,12 @@ fun showDriverStandingsList(championships: MutableList<Championship>, categoryTy
     val format = "| %-8d | %-20s | %-18s | %-8d |"
     
     var position = 1
-    for ((driver, points) in sortedStandings) {
+    for (driver in standings) {
         val formatString = format.format(
             position,
             driver.name,
             driver.team.name,
-            points
+            driver.pointsScored
         )
         
         println(formatString)
@@ -59,6 +62,12 @@ fun showDriverStandingsList(championships: MutableList<Championship>, categoryTy
     }
     
     println("+----------+----------------------+--------------------+----------+")
+}
+
+fun showDriverStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
+    var championship = championships.find {it.category.categoryType == categoryType} ?: return
+    
+    showDriverStandingsList(championship)
 }
 
 fun showDriversList(drivers: MutableList<Driver>) {
@@ -143,4 +152,28 @@ fun showOffersList(offers: MutableList<Offer>) {
     }
     
     println("+----------------------+------------------------+---------------+----------------------+")
+}
+
+fun showCalendarOfRacesList(championship: Championship) {
+    println("+----------+--------------------------+-------------+--------+----------------------+----------+")
+    println("| Position | Track                    | Length      | Laps   | Country              | Finished |")
+    println("+----------+--------------------------+-------------+--------+----------------------+----------+")
+    
+    val format = "| %-8d | %-24s | %-11.2f | %-6d | %-20s | %-8b |"
+    
+    for(race in championship.races) {
+        val formatString = format.format(
+            race.id,
+            race.track.name,
+            race.track.length,
+            race.track.laps,
+            race.track.country,
+            race.isCompleted
+        )
+        
+        println(formatString)
+    }
+    
+    println("+----------+--------------------------+-------------+--------+----------------------+----------+")
+
 }

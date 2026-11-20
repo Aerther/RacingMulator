@@ -22,12 +22,16 @@ class Menu() {
         println()
     }
     
+    fun showCalendarOfRaces(champ: Championship) {
+        showCalendarOfRacesList(champ)
+    }
+    
     fun showOffers(offers: MutableList<Offer>) {
         showOffersList(offers)
     }
     
     fun showDriverStandings(championship: Championship) {
-        showDriverStandings(mutableListOf(championship), championship.category.categoryType)
+        showDriverStandingsList(championship)
     }
     
     fun showDriverStandings(championships: MutableList<Championship>, categoryType: TypeCategory) {
@@ -35,7 +39,7 @@ class Menu() {
     }
     
     fun showConstructorStandings(championship: Championship) {
-        showConstructorStandingsList(mutableListOf(championship), championship.category.categoryType)
+        showConstructorStandingsList(championship)
     }
     
     fun showConstructorStandings(championships: MutableList<Championship>, categoryType: TypeCategory) {

@@ -3,14 +3,18 @@ package models
 class Championship(
     val id: Int,
     var category: Category,
-    var races: MutableMap<Track, Result> = mutableMapOf<Track, Result>(),
-    var drivers: MutableList<Driver> = mutableListOf<Driver>()
+    var races: MutableList<Race> = mutableListOf<Race>(),
+    var drivers: MutableList<Driver> = mutableListOf<Driver>(),
+    var teams: MutableList<Team> = mutableListOf<Team>()
 ) {
-    fun start(tracks: MutableList<Track>, drivers: MutableList<Driver>) {
+    fun start(tracks: MutableList<Track>, teams: MutableList<Team>, drivers: MutableList<Driver>) {
         var driversCopy: MutableList<Driver> = drivers.filter {it.team.category.categoryType == category.categoryType}.toMutableList()
         driversCopy.remove(category.leftoverDriver)
         
         this.drivers = driversCopy
+        
+        var teamsCopy = teams.filter {it.category.categoryType == category.categoryType}.toMutableList()
+        this.teams = teamsCopy
         
         setTracksToRace(tracks, driversCopy)
     }
@@ -22,49 +26,31 @@ class Championship(
         for(track in tracksCopy) {
             if(races.size >= category.maxQuantityOfRaces) break
             
-            val result = Result(id = index)
-            result.addDrivers(drivers)
+            var race = Race(id = index, track = track)
+            race.addDrivers(drivers)
             
-            races.put(track, result)
+            races.add(race)
             
             index++
         }
     }
     
-    fun calcConstructorStandings(): MutableMap<Team, Int> {
-        var driverStandings = calcDriverStandings()
-        var standings = mutableMapOf<Team, Int>()
+    fun calcConstructorStandings() {
+        this.calcDriverStandings()
         
-        for((driver, points) in driverStandings) {
-            var team = driver.team
+        for(team in teams) {
+            var driver1 = team.drivers[0]
+            var driver2 = team.drivers[1]
             
-            if(standings.containsKey(team)) {
-                standings[team] = standings[team]!! + points
-            } else {
-                standings.put(team, points)
-            }
+            team.pointsScored = driver1.pointsScored + driver2.pointsScored
         }
-        
-        return standings
     }
     
-    fun calcDriverStandings(): MutableMap<Driver, Int> {
-        var standings = mutableMapOf<Driver, Int>()
-        
-        for((track, result) in races) {
-            if(!result.isCompleted) continue
+    fun calcDriverStandings() {
+        for(race in races) {
+            if(!race.isCompleted || race.isAccounted) continue
             
-            var raceResult = result.getDriverResults()
-            
-            for((driver, points) in raceResult) {
-                if (standings.containsKey(driver)) {
-                    standings[driver] = standings[driver]!! + points
-                } else {
-                    standings[driver] = points
-                }
-            }
+            race.calculateDriverResultsPoints()
         }
-
-        return standings
     }
 }

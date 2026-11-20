@@ -12,11 +12,11 @@
 21;Invicta Racing;2;1;2
 22;Hitech;2;2;2
 23;Campos Racing;2;3;2
-24;DAMS Lucas Oil;2;4;2
-25;MP Motorsport;2;5;2
-26;PREMA Racing;2;6;2
-27;Rodin Motorsport;2;7;2
-28;ART Grand Prix;2;8;2
-29;AIX Racing;2;9;2
-30;Amersfoort Racing;2;10;2
-31;TRIDENT;2;11;2
+24;MP Motorsport;2;4;2
+25;PREMA Racing;2;5;2
+26;DAMS Lucas Oil;2;6;2
+27;ART Grand Prix;2;7;2
+28;Rodin Motorsport;2;8;2
+29;TRIDENT;2;9;2
+30;AIX Racing;2;10;2
+31;Amersfoort Racing;2;11;2
