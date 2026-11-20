@@ -8,6 +8,7 @@ fun showConstructorStandingsList(champ: Championship) {
     
     var standings = champ.teams.toList().sortedByDescending { it.pointsScored }
     
+    println()
     println("+----------+--------------------+----------+")
     println("| Position | Team               | Points   |")
     println("+----------+--------------------+----------+")
@@ -28,6 +29,8 @@ fun showConstructorStandingsList(champ: Championship) {
     }
     
     println("+----------+--------------------+----------+")
+    println()
+    
 }
 
 fun showConstructorStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
@@ -41,6 +44,7 @@ fun showDriverStandingsList(champ: Championship) {
     
     val standings = champ.drivers.toList().sortedByDescending { it.pointsScored }
     
+    println()
     println("+----------+----------------------+--------------------+----------+")
     println("| Position | Driver               | Team               | Points   |")
     println("+----------+----------------------+--------------------+----------+")
@@ -62,6 +66,7 @@ fun showDriverStandingsList(champ: Championship) {
     }
     
     println("+----------+----------------------+--------------------+----------+")
+    println()
 }
 
 fun showDriverStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
@@ -71,6 +76,7 @@ fun showDriverStandingsList(championships: MutableList<Championship>, categoryTy
 }
 
 fun showDriversList(drivers: MutableList<Driver>) {
+    println()
     println("+----------------------+--------------------+---------+---------+----------+-------------+")
     println("| Driver               | Team               | Defense | Control | Overtake | Consistency |")
     println("+----------------------+--------------------+---------+---------+----------+-------------+")
@@ -91,9 +97,11 @@ fun showDriversList(drivers: MutableList<Driver>) {
     }
     
     println("+----------------------+--------------------+---------+---------+----------+-------------+")
+    println()
 }
 
 fun showTeamsList(teams: MutableList<Team>) {
+    println()
     println("+----------------------+--------------------+---------------------+---------+")
     println("| Team                 | Category           | Quantity of Drivers | Seats   |")
     println("+----------------------+--------------------+---------------------+---------+")
@@ -112,9 +120,11 @@ fun showTeamsList(teams: MutableList<Team>) {
     }
     
     println("+----------------------+--------------------+---------------------+---------+")
+    println()
 }
 
 fun showCategoriesList(categories: MutableList<Category>) {
+    println()
     println("+----------------------+------------------------+")
     println("| Category             | Quantity of Teams      |")
     println("+----------------------+------------------------+")
@@ -131,9 +141,11 @@ fun showCategoriesList(categories: MutableList<Category>) {
     }
     
     println("+----------------------+------------------------+")
+    println()
 }
 
 fun showOffersList(offers: MutableList<Offer>) {
+    println()
     println("+----------------------+------------------------+---------------+----------------------+")
     println("| Offfer Number        | Team                   | Category      | Objective (position) |")
     println("+----------------------+------------------------+---------------+----------------------+")
@@ -152,16 +164,21 @@ fun showOffersList(offers: MutableList<Offer>) {
     }
     
     println("+----------------------+------------------------+---------------+----------------------+")
+    println()
 }
 
-fun showCalendarOfRacesList(championship: Championship) {
+fun showCalendarOfRacesList(champ: Championship, showCurrentRace: Boolean = false) {
+    println()
     println("+----------+--------------------------+-------------+--------+----------------------+----------+")
     println("| Position | Track                    | Length      | Laps   | Country              | Finished |")
     println("+----------+--------------------------+-------------+--------+----------------------+----------+")
     
     val format = "| %-8d | %-24s | %-11.2f | %-6d | %-20s | %-8b |"
     
-    for(race in championship.races) {
+    var index = 0
+    for(race in champ.races) {
+        if(champ.currentRaceIndex != index && showCurrentRace) continue
+        
         val formatString = format.format(
             race.id,
             race.track.name,
@@ -172,8 +189,35 @@ fun showCalendarOfRacesList(championship: Championship) {
         )
         
         println(formatString)
+        index++
     }
     
     println("+----------+--------------------------+-------------+--------+----------------------+----------+")
+    println()
+}
 
+fun showPlayerStatsList(champ: Championship, player: Driver) {
+    champ.calcDriverStandings()
+    
+    println()
+    println("+-------------------------+-------------------------+---------------+---------+---------+----------+-------------+")
+    println("| Your name               | Your team               | Points Scored | Defense | Control | Overtake | Consistency |")
+    println("+-------------------------+-------------------------+---------------+---------+---------+----------+-------------+")
+    
+    val format = "| %-23s | %-23s | %-13d | %-7d | %-7d | %-8d | %-11d |"
+    
+    val formatString = format.format(
+        player.name,
+        player.team.name,
+        player.pointsScored,
+        player.defense,
+        player.control,
+        player.overtake,
+        player.consistency
+    )
+        
+    println(formatString)
+    
+    println("+-------------------------+-------------------------+---------------+---------+---------+----------+-------------+")
+    println()
 }

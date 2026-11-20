@@ -5,6 +5,25 @@ import models.*
 import enums.*
 
 class Menu() {
+    fun showNotEnoughPointsToUpdate() {
+        println()
+        println("Sorry, you don't have any update points left. Go racing to get some")
+        println()    
+    }
+    
+    fun showStatsMenu(player: Driver) {
+        println()
+        println("--------------------------------------------")
+        println("Current Points to Update: ${player.updatePointsLeft}")
+        println("1 - Consistency (current: ${player.consistency})")
+        println("2 - Defense (current: ${player.defense})")
+        println("3 - Overtake (current: ${player.overtake})")
+        println("4 - Control (current: ${player.control})")
+        println("17 - Exit")
+        println("--------------------------------------------")
+        println()
+    }
+    
     fun showMenu() {
         println()
         println("--------------------------------------------")
@@ -20,6 +39,14 @@ class Menu() {
         println("17 - Exit")
         println("--------------------------------------------")
         println()
+    }
+    
+    fun showPlayerStats(champ: Championship, player: Driver) {
+        showPlayerStatsList(champ, player)
+    }
+    
+    fun showCurrentRace(champ: Championship) {
+        showCalendarOfRacesList(champ, true)
     }
     
     fun showCalendarOfRaces(champ: Championship) {

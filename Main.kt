@@ -48,6 +48,7 @@ fun main() {
             // simulate current race
         } else if(number == 2) {
             // see current race
+            menu.showCurrentRace(champ)
         } else if(number == 3) {
             // see drivers championship
             menu.showDriverStandings(champ)
@@ -62,6 +63,50 @@ fun main() {
             menu.showOffers(offers)
         } else if(number == 7) {
             // see your stats
+            menu.showPlayerStats(champ, player)
+            
+            var option = input.getOptionToUpdateStats()
+            
+            if(player.updatePointsLeft <= 0) {
+                menu.showNotEnoughPointsToUpdate()  
+            } else if(option == "yes") {
+                
+                while(true) {
+                    menu.showStatsMenu(player)
+                
+                    var stat = input.getOption()
+                    var updated = false
+                    
+                    if(stat == 1) {
+                        player.consistency += 1
+                        
+                        updated = true
+                    } else if(stat == 2) {
+                        player.defense += 1
+                        
+                        updated = true
+                    } else if(stat == 3) {
+                        player.overtake += 1
+                        
+                        updated = true
+                    } else if(stat == 4) {
+                        player.control += 1
+                        
+                        updated = true
+                    } else if(stat == 17) {
+                        break
+                    }
+                    
+                    if(updated) {
+                        player.updatePointsLeft -= 1
+                    }
+                    
+                    if(player.updatePointsLeft <= 0) {
+                        menu.showNotEnoughPointsToUpdate()
+                        break
+                    }
+                }
+            }
         } else if(number == 8) {
             // see other championships standings
         } else if(number == 9) {
@@ -72,6 +117,8 @@ fun main() {
         }
         
     }
+    
+    println("Bye bye...")
 }
 
 // kotlinc Main.kt src\constants\*.kt src\utils\*.kt src\visual\*.kt src\models\*.kt src\enums\*.kt src\service\*.kt -include-runtime -d Main.jar
