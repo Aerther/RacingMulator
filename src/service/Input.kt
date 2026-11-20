@@ -39,4 +39,11 @@ class Input() {
         
         return input
     }
+    
+    fun getOptionToUpdateStats(): String {
+        print("Do you wish to update your points? (yes/no) ")
+        var input = readln()
+        
+        return input
+    }
 }

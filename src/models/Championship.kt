@@ -3,10 +3,15 @@ package models
 class Championship(
     val id: Int,
     var category: Category,
+    var currentRaceIndex: Int = 0,
     var races: MutableList<Race> = mutableListOf<Race>(),
     var drivers: MutableList<Driver> = mutableListOf<Driver>(),
     var teams: MutableList<Team> = mutableListOf<Team>()
 ) {
+    fun getCurrentRace(): Race {
+        return races[currentRaceIndex]
+    }
+    
     fun start(tracks: MutableList<Track>, teams: MutableList<Team>, drivers: MutableList<Driver>) {
         var driversCopy: MutableList<Driver> = drivers.filter {it.team.category.categoryType == category.categoryType}.toMutableList()
         driversCopy.remove(category.leftoverDriver)
