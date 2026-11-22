@@ -37,7 +37,7 @@ class Race(
                 
                 val luck = (-30..30).random() / 100.0
                 
-                var time = difficulty * (1 - median / (100.0 * (5 - difficulty))) * teamMultiplier + luck * 2 + 10
+                var time = difficulty * (1 - median / (100.0 * (6 - difficulty))) * teamMultiplier + luck * 2 + 10
                 
                 result.timeToComplete += time
             }

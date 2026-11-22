@@ -24,6 +24,10 @@ class Championship(
     }
     
     fun start(tracks: MutableList<Track>, teams: MutableList<Team>, drivers: MutableList<Driver>) {
+        this.races = mutableListOf()
+        this.drivers = mutableListOf()
+        this.races = mutableListOf()
+        
         var driversCopy: MutableList<Driver> = drivers.filter {it.team.category.categoryType == category.categoryType}.toMutableList()
         driversCopy.remove(category.leftoverDriver)
         
@@ -56,6 +60,8 @@ class Championship(
     }
     
     fun restartDriversAndTeamsPoints() {
+        this.currentRaceIndex = 0
+        
         for(driver in drivers) {
             driver.pointsScored = 0
             driver.highestPosition = 100

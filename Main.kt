@@ -134,7 +134,8 @@ fun main() {
             menu.showDriverStandings(champ)
             menu.showConstructorStandings(champ)
             
-            offers.addAll(calculation.getOffers(champ, player))
+            offers.addAll(calculation.getOffersFromSameCategory(champ, player))
+            offers.addAll(calculation.getOffersFromDifferentCategory(champs, player))
             
             if(offers.size != 0) {
                 menu.showOffers(offers)
@@ -152,9 +153,10 @@ fun main() {
             println("Championship has ended, starting another")
             println()
             
-            champ.restartDriversAndTeamsPoints()
-            champ = Championship(id = 1, category = player.team.category)
-            champ.start(tracks, teams, drivers)  
+            calculation.restartChampionships(champs)
+            champ = champs.find { it.category.categoryType == player.team.category.categoryType } ?: champs[2]
+            
+            calculation.startChampionships(champs, tracks, teams, drivers)
             
             player.isFirstSeason = false
         }

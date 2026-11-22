@@ -4,6 +4,12 @@ import models.*
 import enums.*
 
 class Calculation() {
+    fun restartChampionships(champs: MutableList<Championship>) {
+        for(champ in champs) {
+            champ.restartDriversAndTeamsPoints()
+        }
+    }
+    
     fun startChampionships(
         champs: MutableList<Championship>, 
         tracks: MutableList<Track>, 
@@ -73,7 +79,46 @@ class Calculation() {
         return offers
     }
     
-    fun getOffers(champ: Championship, player: Driver): MutableList<Offer> {
+    fun getEligibleTeams(teams: MutableList<Team>, condition: (Team) -> Boolean): MutableList<Team> {
+        return teams.filter(condition).toMutableList()
+    }
+
+    fun chooseRandomTeams(teams: MutableList<Team>, quantOfTeams: Int, startLevel: Int, endLevel: Int): MutableList<Team> {
+        var teamsCopy = getEligibleTeams(teams, it.level >= startLevel && it.level <= endLevel)
+        
+        val selectedTeams = teamsCopy.shuffled().take(quantOfTeams).toMutableList()
+        
+        return selectedTeams
+    }
+    
+    fun getOffersFromDifferentCategory(champs: MutableList<Championship>, player: Driver): MutableList<Offer> {
+        if(player.position >= 7) return mutableListOf()
+        
+        var champ = champs.find { it.category.categoryType.level == player.team.category.categoryType.level - 1 } ?: return mutableListOf()
+
+        var quantOfTeams = 7 - player.position
+        
+        var teams = chooseRandomTeams(champ.teams, quantOfTeams, player.position + 2, champ.teams.size)
+
+        var offers: MutableList<Offer> = mutableListOf()
+        
+        var index = 20
+        for(team in teams) {
+            var offer = Offer(
+                id = index,
+                team = team,
+                objective = team.objective
+            )
+                
+            offers.add(offer)
+            
+            index++
+        }
+        
+        return offers
+    }
+    
+    fun getOffersFromSameCategory(champ: Championship, player: Driver): MutableList<Offer> {
         var offers: MutableList<Offer> = mutableListOf<Offer>()
         
         if(champ.races.size * 80/100 > champ.currentRaceIndex + 1) return mutableListOf()
