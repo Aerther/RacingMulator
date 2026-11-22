@@ -14,10 +14,11 @@ var tracks = reader.readTrackFile()
 var categories = reader.readCategoryFile()
 var teams = reader.readTeamsFile(categories)
 var drivers = reader.readDriversFile(teams)
-var offers: MutableList<Offer> = calculation.getStarterOffers(teams, STARTER_CATEGORY)
 
-var formula = categories.find {it.categoryType == STARTER_CATEGORY} ?: categories[0]
-var champ = Championship(id = 1, category = formula)
+var offers: MutableList<Offer> = calculation.getStarterOffers(teams, STARTER_CATEGORY)
+var champs: MutableList<Championship> = calculation.getStartingChampionships(categories)
+
+var champ = champs.find {it.category.categoryType == STARTER_CATEGORY} ?: champs[2]
 
 fun main() {
     println("Welcome so RacingMulator")
@@ -27,18 +28,15 @@ fun main() {
     println("Please, input the offer number you want")
     menu.showOffers(offers)
     
-    var offerNumber = input.getOffer()
-    
-    var offerChosen = offers.find {it.id == offerNumber} ?: offers[0]
-    var team = offerChosen.team
+    var team = input.getOffer(offers)
     
     offers.clear()
     
-    var player = Driver(id = 0, name = name, team = team)
+    var player = Driver(id = 0, name = name, team = team, isFirstSeason = true, isPlayer = true)
     team.setDriver(player, 2, true)
     drivers.add(player)
     
-    champ.start(tracks, teams, drivers)
+    calculation.startChampionships(champs, tracks, teams, drivers)
     
     while(true) {
         menu.showMenu()
@@ -46,6 +44,16 @@ fun main() {
         
         if(number == 1) {
             // simulate current race
+            calculation.simulateCurrentRaces(champs, champ)
+            
+            var race = champ.simulateCurrentRace()
+            
+            menu.showRaceResults(race)
+            
+            player.updatePointsLeft += champ.category.categoryType.pointsPerRace
+            
+            if(race.hasBeatenTeammate(player)) player.updatePointsLeft += 3
+            
         } else if(number == 2) {
             // see current race
             menu.showCurrentRace(champ)
@@ -67,9 +75,9 @@ fun main() {
             
             var option = input.getOptionToUpdateStats()
             
-            if(player.updatePointsLeft <= 0) {
+            if(player.updatePointsLeft <= 0 && option == "y") {
                 menu.showNotEnoughPointsToUpdate()  
-            } else if(option == "yes") {
+            } else if(option == "y") {
                 
                 while(true) {
                     menu.showStatsMenu(player)
@@ -78,21 +86,21 @@ fun main() {
                     var updated = false
                     
                     if(stat == 1) {
-                        player.consistency += 1
+                        if(player.consistency != 100) updated = true
                         
-                        updated = true
+                        player.consistency = minOf(player.consistency + 1, 100)
                     } else if(stat == 2) {
-                        player.defense += 1
+                        if(player.defense != 100) updated = true
                         
-                        updated = true
+                        player.defense = minOf(player.defense + 1, 100)
                     } else if(stat == 3) {
-                        player.overtake += 1
+                        if(player.overtake != 100) updated = true
                         
-                        updated = true
+                        player.overtake = minOf(player.overtake + 1, 100)
                     } else if(stat == 4) {
-                        player.control += 1
+                        if(player.control != 100) updated = true
                         
-                        updated = true
+                        player.control = minOf(player.control + 1, 100)
                     } else if(stat == 17) {
                         break
                     }
@@ -109,6 +117,12 @@ fun main() {
             }
         } else if(number == 8) {
             // see other championships standings
+            menu.showChampionships(champs, champ)
+            
+            var champ = input.getChamp(champs)
+            
+            menu.showDriverStandings(champ)
+            menu.showConstructorStandings(champ)
         } else if(number == 9) {
             // save
         } else if(number == 17) {
@@ -116,6 +130,34 @@ fun main() {
             break
         }
         
+        if(champ.hasEnded()) {
+            menu.showDriverStandings(champ)
+            menu.showConstructorStandings(champ)
+            
+            offers.addAll(calculation.getOffers(champ, player))
+            
+            if(offers.size != 0) {
+                menu.showOffers(offers)
+                
+                var team = input.getOffer(offers)
+                
+                player.team.removePlayer(index = 1)
+                team.setDriver(player, 2, true)
+                player.team = team
+                
+                offers.clear()
+            }
+            
+            println()
+            println("Championship has ended, starting another")
+            println()
+            
+            champ.restartDriversAndTeamsPoints()
+            champ = Championship(id = 1, category = player.team.category)
+            champ.start(tracks, teams, drivers)  
+            
+            player.isFirstSeason = false
+        }
     }
     
     println("Bye bye...")

@@ -8,10 +8,11 @@ class Team(
     val category: Category,
     var pointsScored: Int = 0,
     var level: Int = 100,
-    var objective: Int = 1
+    var objective: Int = 1,
+    var position: Int = 0
 ) {
     fun calcObjective() {
-        objective = level * 18/10
+        this.objective = this.level * this.seats * 9/10
     }
     
     fun addDriver(driver: Driver) {

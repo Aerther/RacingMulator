@@ -20,25 +20,55 @@
 43;Franco Colapinto;82;80;83;82;10
 11;Sergio Perez;89;91;88;90;11
 77;Valtteri Bottas;90;92;89;91;11
-101;Leonardo Fornaroli;92;93;91;92;21
-102;Joshua Durksen;87;88;87;88;21
-103;Ritomo Miyata;88;90;87;90;22
-104;Colton Herta;91;88;92;90;22
-105;Noel Leon;86;87;88;87;23
-106;Nikola Tsolov;91;89;92;90;23
-107;Dino Beganovic;90;91;89;91;24
-108;Roman Bilinski;84;85;85;85;24
-109;Gabriele Mini;92;90;93;92;25
-110;Oliver Goethe;88;89;90;89;25
-111;Sebastian Montoya;86;87;87;88;26
-112;Mari Boya;87;88;87;88;26
-113;Martinius Stenshorne;88;87;90;89;27
-114;Alexander Dunne;92;89;93;91;27
-115;Kush Maini;88;90;87;89;28
-116;Tasanapol;84;85;86;85;28
-117;Emerson Fittipaldi;85;86;86;86;29
-118;Cian Shields;82;84;83;84;29
-119;Hiyu Yamakoshi;83;85;84;85;30
-120;Rafael Villagomez;84;85;85;84;30
-121;Laurens van Hoepen;87;88;89;88;31
-122;John Bennett;83;84;85;84;31
+101;Leonardo Fornaroli;62;63;61;62;21
+102;Joshua Durksen;57;58;57;58;21
+103;Ritomo Miyata;58;60;57;60;22
+104;Colton Herta;61;58;62;60;22
+105;Noel Leon;56;57;58;57;23
+106;Nikola Tsolov;61;59;62;60;23
+107;Dino Beganovic;60;61;59;61;24
+108;Roman Bilinski;54;55;55;55;24
+109;Gabriele Mini;62;60;63;62;25
+110;Oliver Goethe;58;59;60;59;25
+111;Sebastian Montoya;56;57;57;58;26
+112;Mari Boya;57;58;57;58;26
+113;Martinius Stenshorne;58;57;60;59;27
+114;Alexander Dunne;62;59;63;61;27
+115;Kush Maini;58;60;57;59;28
+116;Tasanapol;54;55;56;55;28
+117;Emerson Fittipaldi;55;56;56;56;29
+118;Cian Shields;52;54;53;54;29
+119;Hiyu Yamakoshi;53;55;54;55;30
+120;Rafael Villagomez;54;55;55;54;30
+121;Laurens van Hoepen;57;58;59;58;31
+122;John Bennett;53;54;55;54;31
+201;Théophile Naël;34;33;35;34;40
+202;Ugo Ugochukwu;35;34;34;35;40
+221;Ernesto Rivera;34;34;35;34;40
+204;Noah Stromsted;33;34;34;33;41
+203;Freddie Slater;35;35;34;35;41
+222;Matteo De Palo;34;35;34;34;41
+205;Mattia Colnaghi;34;34;35;34;42
+206;Tuukka Taponen;35;34;35;35;42
+223;Alessandro Giusti;35;34;35;35;42
+207;Taito Kato;32;33;34;33;43
+208;Maciej Gladysz;33;34;33;34;43
+224;Kanato Le;33;34;35;34;43
+215;Fionn McLaughlin;33;33;34;33;44
+216;Jin Nakamura;34;33;34;34;44
+228;Woohyun Shin;34;33;34;34;44
+211;Alex Powell;34;35;34;34;45
+212;James Wharton;35;34;35;34;45
+227;Jose Garfias;33;34;33;34;45
+213;Pedro Clerot;33;34;33;34;46
+214;Brando Badoer;34;33;34;34;46
+226;Niccolo Maccagnani;33;34;35;34;46
+209;Hiyu Yamakoshi;33;34;33;34;47
+210;Enzo Deligny;34;35;34;35;47
+225;Bruno Del Pino;34;34;34;35;47
+217;Nicola Lacorte;34;33;34;33;48
+218;Gerrard Xie;33;34;33;34;48
+230;Nandhavud;32;34;33;33;48
+219;Yevan David;34;34;35;34;49
+220;Fernando Barrichello;33;33;34;33;49
+229;Ricardo Escotto;33;34;34;33;49

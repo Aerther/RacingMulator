@@ -3,10 +3,34 @@ package visual
 import models.*
 import enums.*
     
+fun showChampionshipsList(champs: MutableList<Championship>) {
+    println()
+    println("+-------+--------------------+-----------------+-------------------+")
+    println("| Index | Championship       | Quant. Of Teams | Quant. Of Drivers |")
+    println("+-------+--------------------+-----------------+-------------------+")
+    
+    val format = "| %-5d | %-18s | %-15d | %-17d |"
+    
+    for(champ in champs) {
+        var formatString = format.format(
+            champ.id,
+            champ.category.name,
+            champ.teams.size,
+            champ.drivers.size
+        )
+        
+        println(formatString)
+    }
+    
+    println("+-------+-------------------+-----------------+-------------------+")
+    println()
+}
+    
 fun showConstructorStandingsList(champ: Championship) {
     champ.calcConstructorStandings()
+    champ.sortConstructorsStandings()
     
-    var standings = champ.teams.toList().sortedByDescending { it.pointsScored }
+    var standings = champ.teams
     
     println()
     println("+----------+--------------------+----------+")
@@ -33,16 +57,11 @@ fun showConstructorStandingsList(champ: Championship) {
     
 }
 
-fun showConstructorStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
-    var championship = championships.find {it.category.categoryType == categoryType} ?: return
-    
-    showConstructorStandingsList(championship)
-}
-
 fun showDriverStandingsList(champ: Championship) {
     champ.calcDriverStandings()
+    champ.sortDriversStandings()
     
-    val standings = champ.drivers.toList().sortedByDescending { it.pointsScored }
+    val standings = champ.drivers
     
     println()
     println("+----------+----------------------+--------------------+----------+")
@@ -69,10 +88,27 @@ fun showDriverStandingsList(champ: Championship) {
     println()
 }
 
-fun showDriverStandingsList(championships: MutableList<Championship>, categoryType: TypeCategory) {
-    var championship = championships.find {it.category.categoryType == categoryType} ?: return
+fun showRaceResultsList(race: Race) {
+    println()
+    println("+----------+-------------------------+-------------------------+--------------+")
+    println("| Position | Driver                  | Team                    | Time         |")
+    println("+----------+-------------------------+-------------------------+--------------+")
     
-    showDriverStandingsList(championship)
+    val format = "| %-8d | %-23s | %-23s | %-12.2f |"
+    
+    for(result in race.results) {
+        val formatString = format.format(
+            result.position,
+            result.driver.name,
+            result.driver.team.name,
+            result.timeToComplete
+        )
+        
+        println(formatString)
+    }
+    
+    println("+----------+-------------------------+-------------------------+--------------+")
+    println()
 }
 
 fun showDriversList(drivers: MutableList<Driver>) {
@@ -175,8 +211,10 @@ fun showCalendarOfRacesList(champ: Championship, showCurrentRace: Boolean = fals
     
     val format = "| %-8d | %-24s | %-11.2f | %-6d | %-20s | %-8b |"
     
-    var index = 0
+    var index = -1
     for(race in champ.races) {
+        index++
+            
         if(champ.currentRaceIndex != index && showCurrentRace) continue
         
         val formatString = format.format(
@@ -189,7 +227,6 @@ fun showCalendarOfRacesList(champ: Championship, showCurrentRace: Boolean = fals
         )
         
         println(formatString)
-        index++
     }
     
     println("+----------+--------------------------+-------------+--------+----------------------+----------+")
@@ -198,26 +235,29 @@ fun showCalendarOfRacesList(champ: Championship, showCurrentRace: Boolean = fals
 
 fun showPlayerStatsList(champ: Championship, player: Driver) {
     champ.calcDriverStandings()
+    champ.sortDriversStandings()
     
     println()
-    println("+-------------------------+-------------------------+---------------+---------+---------+----------+-------------+")
-    println("| Your name               | Your team               | Points Scored | Defense | Control | Overtake | Consistency |")
-    println("+-------------------------+-------------------------+---------------+---------+---------+----------+-------------+")
+    println("+-------------------------+-------------------------+---------+-----------+---------------+---------+---------+----------+-------------+")
+    println("| Your name               | Your team               | Current | Objective | Points Scored | Defense | Control | Overtake | Consistency |")
+    println("+-------------------------+-------------------------+---------+-----------+---------------+---------+---------+----------+-------------+")
     
-    val format = "| %-23s | %-23s | %-13d | %-7d | %-7d | %-8d | %-11d |"
+    val format = "| %-23s | %-23s | %-7d | %-9d | %-13d | %-7d | %-7d | %-8d | %-11d |"
     
     val formatString = format.format(
         player.name,
         player.team.name,
+        player.position,
+        player.team.objective,
         player.pointsScored,
         player.defense,
         player.control,
         player.overtake,
         player.consistency
     )
-        
+
     println(formatString)
     
-    println("+-------------------------+-------------------------+---------------+---------+---------+----------+-------------+")
+    println("+-------------------------+-------------------------+---------+-----------+---------------+---------+---------+----------+-------------+")
     println()
 }

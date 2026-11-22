@@ -1,13 +1,13 @@
-1;McLaren;2;1;1
-2;Mercedes;2;2;1
+1;McLaren;2;4;1
+2;Mercedes;2;1;1
 3;Red Bull Racing;2;3;1
-4;Ferrari;2;4;1
-5;Williams;2;5;1
-6;Racing Bulls;2;6;1
-7;Aston Martin;2;7;1
-8;Haas;2;8;1
+4;Ferrari;2;2;1
+5;Williams;2;8;1
+6;Racing Bulls;2;5;1
+7;Aston Martin;2;10;1
+8;Haas;2;6;1
 9;Audi;2;9;1
-10;Alpine;2;10;1
+10;Alpine;2;7;1
 11;Cadillac;2;11;1
 21;Invicta Racing;2;1;2
 22;Hitech;2;2;2
@@ -20,3 +20,13 @@
 29;TRIDENT;2;9;2
 30;AIX Racing;2;10;2
 31;Amersfoort Racing;2;11;2
+40;Campos Racing;3;1;3
+41;TRIDENT;3;2;3
+42;MP Motorsport;3;3;3
+43;ART Grand Prix;3;4;3
+44;Hitech;3;5;3
+45;PREMA Racing;3;6;3
+46;Rodin Motorsport;3;7;3
+47;Van Amersfoort;3;8;3
+48;DAMS Lucas Oil;3;9;3
+49;AIX Racing;3;10;3

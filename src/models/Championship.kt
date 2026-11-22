@@ -1,5 +1,7 @@
 package models
 
+import enums.*
+
 class Championship(
     val id: Int,
     var category: Category,
@@ -8,6 +10,15 @@ class Championship(
     var drivers: MutableList<Driver> = mutableListOf<Driver>(),
     var teams: MutableList<Team> = mutableListOf<Team>()
 ) {
+    fun simulateCurrentRace(): Race {
+        var race = getCurrentRace()
+        race.simulate(this)
+        
+        this.currentRaceIndex++
+            
+        return race
+    }
+    
     fun getCurrentRace(): Race {
         return races[currentRaceIndex]
     }
@@ -40,14 +51,56 @@ class Championship(
         }
     }
     
+    fun hasEnded(): Boolean {
+        return this.currentRaceIndex == this.races.size
+    }
+    
+    fun restartDriversAndTeamsPoints() {
+        for(driver in drivers) {
+            driver.pointsScored = 0
+            driver.highestPosition = 100
+        }
+        
+        for(team in teams) {
+            team.pointsScored = 0
+        }
+    }
+    
+    fun sortDriversStandings() {
+        this.drivers = this.drivers.sortedWith(
+            compareByDescending<Driver> { it.pointsScored }.thenBy { it.highestPosition }
+        ).toMutableList()
+        
+        var position = 1
+        for(driver in drivers) {
+            driver.position = position
+            
+            position++
+        }
+    }
+    
+    fun sortConstructorsStandings() {
+        this.teams = this.teams.toList().sortedByDescending { it.pointsScored }.toMutableList()
+        
+        var position = 1
+        for(team in teams) {
+            team.position = position
+            
+            position++
+        }
+    }
+    
     fun calcConstructorStandings() {
         this.calcDriverStandings()
         
         for(team in teams) {
-            var driver1 = team.drivers[0]
-            var driver2 = team.drivers[1]
+            var points = 0
             
-            team.pointsScored = driver1.pointsScored + driver2.pointsScored
+            for(driver in team.drivers) {
+                points += driver.pointsScored
+            }
+            
+            team.pointsScored = points
         }
     }
     

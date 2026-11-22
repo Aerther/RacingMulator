@@ -2,4 +2,4 @@ package constants
 
 import enums.*
     
-val STARTER_CATEGORY = TypeCategory.FORMULA2
+val STARTER_CATEGORY = TypeCategory.FORMULA3

@@ -15,10 +15,10 @@ class Menu() {
         println()
         println("--------------------------------------------")
         println("Current Points to Update: ${player.updatePointsLeft}")
-        println("1 - Consistency (current: ${player.consistency})")
-        println("2 - Defense (current: ${player.defense})")
-        println("3 - Overtake (current: ${player.overtake})")
-        println("4 - Control (current: ${player.control})")
+        println("1 - Consistency (current: ${if (player.consistency >= 100) "MAX" else player.consistency})")
+        println("2 - Defense (current: ${if (player.defense >= 100) "MAX" else player.defense})")
+        println("3 - Overtake (current: ${if (player.overtake >= 100) "MAX" else player.overtake})")
+        println("4 - Control (current: ${if (player.control >= 100) "MAX" else player.control})")
         println("17 - Exit")
         println("--------------------------------------------")
         println()
@@ -39,6 +39,10 @@ class Menu() {
         println("17 - Exit")
         println("--------------------------------------------")
         println()
+    }
+    
+    fun showRaceResults(race: Race) {
+        showRaceResultsList(race)
     }
     
     fun showPlayerStats(champ: Championship, player: Driver) {
@@ -62,7 +66,9 @@ class Menu() {
     }
     
     fun showDriverStandings(championships: MutableList<Championship>, categoryType: TypeCategory) {
-        showDriverStandingsList(championships, categoryType)
+        var champ = championships.find {it.category.categoryType == categoryType} ?: return
+        
+        showDriverStandingsList(champ)
     }
     
     fun showConstructorStandings(championship: Championship) {
@@ -70,6 +76,14 @@ class Menu() {
     }
     
     fun showConstructorStandings(championships: MutableList<Championship>, categoryType: TypeCategory) {
-        showConstructorStandingsList(championships, categoryType)
+        var champ = championships.find {it.category.categoryType == categoryType} ?: return
+        
+        showConstructorStandingsList(champ)
+    }
+    
+    fun showChampionships(championships: MutableList<Championship>, currentChamp: Championship) {
+        var champs = championships.filter { it != currentChamp }.toMutableList()
+        
+        showChampionshipsList(champs)
     }
 }

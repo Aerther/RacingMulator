@@ -1,5 +1,7 @@
 package service
 
+import models.*
+
 class Input() {
     fun getPlayerName(): String {
         println("What is your name?")
@@ -10,19 +12,21 @@ class Input() {
         return input
     }
     
-    fun getOffer(): Int {
-        println("Choose an offer number of the list")
+    fun getChamp(champs: MutableList<Championship>): Championship {
+        var champNumber = this.getOption()
         
-        print("Choice: ")
-        var input = readln().toIntOrNull()
-        while(input == null) {
-            println("Invalid input, please choose a number")
-            
-            print("Choice: ")
-            input = readln().toIntOrNull()
-        }
+        var champ = champs.find { it.id == champNumber } ?: champs[0]
         
-        return input
+        return champ
+    }
+    
+    fun getOffer(offers: MutableList<Offer>): Team {
+        var offerNumber = this.getOption()
+    
+        var offerChosen = offers.find {it.id == offerNumber} ?: offers[0]
+        var team = offerChosen.team
+        
+        return team
     }
     
     fun getOption(): Int {
@@ -41,7 +45,7 @@ class Input() {
     }
     
     fun getOptionToUpdateStats(): String {
-        print("Do you wish to update your points? (yes/no) ")
+        print("Do you wish to update your points? (y/n) ")
         var input = readln()
         
         return input

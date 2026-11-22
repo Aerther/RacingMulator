@@ -1,14 +1,65 @@
 package models
 
 import models.Result
+import enums.*
 
 class Race(
     var id: Int,
     var track: Track,
-    val results: MutableList<Result> = mutableListOf<Result>(),
+    var results: MutableList<Result> = mutableListOf<Result>(),
     var isCompleted: Boolean = false,
     var isAccounted: Boolean = false
 ) {
+    fun hasBeatenTeammate(player: Driver): Boolean {
+        val resultPlayer = results.find { it.driver == player } ?: return false
+
+        val resultTeammate = results.find { it.driver.team == player.team && it.driver != player } ?: return false
+
+        return resultPlayer.position < resultTeammate.position
+    }
+    
+    fun simulate(champ: Championship) {
+        var typeCategory = champ.category.categoryType
+        var quantOfTeams = champ.teams.size
+        var difficulty = typeCategory.difficulty
+        
+        var lap = 1
+        while(lap <= track.laps) {
+            for(result in results) {
+                var driver = result.driver
+                var team = driver.team
+                
+                var median = (driver.consistency + driver.defense + driver.overtake + driver.control) / 4.0
+                val teamMultiplier = 0.9 + (team.level - 1) * difficulty / ((quantOfTeams - 1) * 10.0)
+                
+                if(typeCategory == TypeCategory.FORMULA3 && driver.isPlayer) median += 18
+                if(driver.isFirstSeason) median += 13
+                
+                val luck = (-30..30).random() / 100.0
+                
+                var time = difficulty * (1 - median / (100.0 * (5 - difficulty))) * teamMultiplier + luck * 2 + 10
+                
+                result.timeToComplete += time
+            }
+            
+            lap++
+        }
+        
+        this.results = results.sortedBy { it.timeToComplete }.toMutableList()
+        
+        var position = 1
+        for(result in this.results) {
+            result.position = position
+            position++
+                
+            if(result.driver.highestPosition > position) {
+                result.driver.highestPosition = position
+            }
+        }
+        
+        this.isCompleted = true
+    }
+    
     fun addDrivers(drivers: MutableList<Driver>) {
         var position = 1
         for(driver in drivers) {
