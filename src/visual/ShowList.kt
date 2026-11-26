@@ -123,10 +123,10 @@ fun showDriversList(drivers: MutableList<Driver>) {
         val formatString = format.format(
             driver.name,
             driver.team.name,
-            driver.defense,
-            driver.control,
-            driver.overtake,
-            driver.consistency
+            driver.attributes.defense,
+            driver.attributes.control,
+            driver.attributes.overtake,
+            driver.attributes.consistency
         )
         
         println(formatString)
@@ -233,7 +233,7 @@ fun showCalendarOfRacesList(champ: Championship, showCurrentRace: Boolean = fals
     println()
 }
 
-fun showPlayerStatsList(champ: Championship, player: Driver) {
+fun showPlayerStatsList(champ: Championship, player: Player) {
     champ.calcDriverStandings()
     champ.sortDriversStandings()
     
@@ -250,14 +250,42 @@ fun showPlayerStatsList(champ: Championship, player: Driver) {
         player.position,
         player.team.objective,
         player.pointsScored,
-        player.defense,
-        player.control,
-        player.overtake,
-        player.consistency
+        player.attributes.defense,
+        player.attributes.control,
+        player.attributes.overtake,
+        player.attributes.consistency
     )
 
     println(formatString)
     
     println("+-------------------------+-------------------------+---------+-----------+---------------+---------+---------+----------+-------------+")
+    println()
+}
+
+fun showPlayerCarrerStatsList(champ: Championship, player: Player) {
+    champ.calcDriverStandings()
+    
+    println()
+    println("+-------------------+---------+---------------+---------+--------+-----------+---------------+")
+    println("| Category          | Seasons | Championships | Races   | Wins   | Podiums   | Points Scored |")
+    println("+-------------------+---------+---------------+---------+--------+-----------+---------------+")
+    
+    val format = "| %-17s | %-7d | %-13d | %-7d | %-6d | %-9d | %-13d |"
+    
+    for(categoryStat in player.categoryStats) {
+        val formatString = format.format(
+            categoryStat.category.name,
+            categoryStat.seasonsParticipated,
+            categoryStat.championshipsWon,
+            categoryStat.racesParticipated,
+            categoryStat.wins,
+            categoryStat.podiums,
+            categoryStat.totalPointsScored
+        )
+
+        println(formatString)
+    }
+    
+    println("+-------------------+---------+---------------+---------+--------+-----------+---------------+")
     println()
 }

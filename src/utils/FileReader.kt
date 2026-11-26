@@ -96,13 +96,12 @@ class FileReader(
             
             var team = teams.find{it.id == data[6].toInt()} ?: teams[0]
             
+            var attributes = DriverAttributes(defense = data[2].toInt(), consistency = data[3].toInt(), overtake = data[4].toInt(), control = data[5].toInt())
+            
             var driver = Driver(
                 id = data[0].toInt(),
                 name = data[1],
-                defense = data[2].toInt(),
-                consistency = data[3].toInt(),
-                overtake = data[4].toInt(),
-                control = data[5].toInt(),
+                attributes = attributes,
                 team = team
             )
             

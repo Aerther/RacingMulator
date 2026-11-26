@@ -10,6 +10,10 @@ class Race(
     var isCompleted: Boolean = false,
     var isAccounted: Boolean = false
 ) {
+    fun findResultOfDriver(driver: Driver): Result {
+        return results.find {it.driver == driver} ?: results[0]
+    }
+    
     fun hasBeatenTeammate(player: Driver): Boolean {
         val resultPlayer = results.find { it.driver == player } ?: return false
 
@@ -29,7 +33,7 @@ class Race(
                 var driver = result.driver
                 var team = driver.team
                 
-                var median = (driver.consistency + driver.defense + driver.overtake + driver.control) / 4.0
+                var median = driver.attributes.getAverage()
                 val teamMultiplier = 0.9 + (team.level - 1) * difficulty / ((quantOfTeams - 1) * 10.0)
                 
                 if(typeCategory == TypeCategory.FORMULA3 && driver.isPlayer) median += 18

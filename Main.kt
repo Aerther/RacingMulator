@@ -32,7 +32,7 @@ fun main() {
     
     offers.clear()
     
-    var player = Driver(id = 0, name = name, team = team, isFirstSeason = true, isPlayer = true)
+    var player = Player(id = 0, name = name, team = team, isFirstSeason = true, isPlayer = true)
     team.setDriver(player, 2, true)
     drivers.add(player)
     
@@ -53,6 +53,9 @@ fun main() {
             player.updatePointsLeft += champ.category.categoryType.pointsPerRace
             
             if(race.hasBeatenTeammate(player)) player.updatePointsLeft += 3
+            
+            race.calculateDriverResultsPoints()
+            player.updateStatsAfterRace(race)
             
         } else if(number == 2) {
             // see current race
@@ -78,6 +81,7 @@ fun main() {
             if(player.updatePointsLeft <= 0 && option == "y") {
                 menu.showNotEnoughPointsToUpdate()  
             } else if(option == "y") {
+                var attributes = player.attributes
                 
                 while(true) {
                     menu.showStatsMenu(player)
@@ -86,21 +90,21 @@ fun main() {
                     var updated = false
                     
                     if(stat == 1) {
-                        if(player.consistency != 100) updated = true
+                        if(attributes.consistency != 100) updated = true
                         
-                        player.consistency = minOf(player.consistency + 1, 100)
+                        attributes.consistency = minOf(attributes.consistency + 1, 100)
                     } else if(stat == 2) {
-                        if(player.defense != 100) updated = true
+                        if(attributes.defense != 100) updated = true
                         
-                        player.defense = minOf(player.defense + 1, 100)
+                        attributes.defense = minOf(attributes.defense + 1, 100)
                     } else if(stat == 3) {
-                        if(player.overtake != 100) updated = true
+                        if(attributes.overtake != 100) updated = true
                         
-                        player.overtake = minOf(player.overtake + 1, 100)
+                        attributes.overtake = minOf(attributes.overtake + 1, 100)
                     } else if(stat == 4) {
-                        if(player.control != 100) updated = true
+                        if(attributes.control != 100) updated = true
                         
-                        player.control = minOf(player.control + 1, 100)
+                        attributes.control = minOf(attributes.control + 1, 100)
                     } else if(stat == 17) {
                         break
                     }
@@ -116,6 +120,9 @@ fun main() {
                 }
             }
         } else if(number == 8) {
+            // all time carrer stats
+            menu.showCarrerStats(champ, player)
+        } else if(number == 9) {
             // see other championships standings
             menu.showChampionships(champs, champ)
             
@@ -123,20 +130,24 @@ fun main() {
             
             menu.showDriverStandings(champ)
             menu.showConstructorStandings(champ)
-        } else if(number == 9) {
-            // save
         } else if(number == 17) {
             // exit
             break
         }
         
         if(champ.hasEnded()) {
+            champ.calcDriverStandings()
+            champ.calcConstructorStandings()
+            
             menu.showDriverStandings(champ)
             menu.showConstructorStandings(champ)
+            
+            player.updateStatsAfterSeason()
             
             offers.addAll(calculation.getOffersFromSameCategory(champ, player))
             offers.addAll(calculation.getOffersFromDifferentCategory(champs, player))
             
+            var lastTeam = player.team
             if(offers.size != 0) {
                 menu.showOffers(offers)
                 
@@ -159,6 +170,10 @@ fun main() {
             calculation.startChampionships(champs, tracks, teams, drivers)
             
             player.isFirstSeason = false
+            
+            if(player.team.category != lastTeam.category) {
+                player.dividePoints()    
+            }
         }
     }
     

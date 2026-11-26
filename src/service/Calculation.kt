@@ -84,7 +84,7 @@ class Calculation() {
     }
 
     fun chooseRandomTeams(teams: MutableList<Team>, quantOfTeams: Int, startLevel: Int, endLevel: Int): MutableList<Team> {
-        var teamsCopy = getEligibleTeams(teams, it.level >= startLevel && it.level <= endLevel)
+        var teamsCopy = getEligibleTeams(teams, { it.level >= startLevel && it.level <= endLevel })
         
         val selectedTeams = teamsCopy.shuffled().take(quantOfTeams).toMutableList()
         

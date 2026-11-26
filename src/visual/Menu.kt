@@ -11,14 +11,16 @@ class Menu() {
         println()    
     }
     
-    fun showStatsMenu(player: Driver) {
+    fun showStatsMenu(player: Player) {
+        var attributes = player.attributes
+        
         println()
         println("--------------------------------------------")
         println("Current Points to Update: ${player.updatePointsLeft}")
-        println("1 - Consistency (current: ${if (player.consistency >= 100) "MAX" else player.consistency})")
-        println("2 - Defense (current: ${if (player.defense >= 100) "MAX" else player.defense})")
-        println("3 - Overtake (current: ${if (player.overtake >= 100) "MAX" else player.overtake})")
-        println("4 - Control (current: ${if (player.control >= 100) "MAX" else player.control})")
+        println("1 - Consistency (current: ${if (attributes.consistency >= 100) "MAX" else attributes.consistency})")
+        println("2 - Defense (current: ${if (attributes.defense >= 100) "MAX" else attributes.defense})")
+        println("3 - Overtake (current: ${if (attributes.overtake >= 100) "MAX" else attributes.overtake})")
+        println("4 - Control (current: ${if (attributes.control >= 100) "MAX" else attributes.control})")
         println("17 - Exit")
         println("--------------------------------------------")
         println()
@@ -34,8 +36,8 @@ class Menu() {
         println("5 - See the calendar of races")
         println("6 - See contract offers")
         println("7 - See your stats")
-        println("8 - See other championships standings")
-        println("9 - Save")
+        println("8 - See all time carrer stats")
+        println("9 - See other championships standings")
         println("17 - Exit")
         println("--------------------------------------------")
         println()
@@ -45,7 +47,7 @@ class Menu() {
         showRaceResultsList(race)
     }
     
-    fun showPlayerStats(champ: Championship, player: Driver) {
+    fun showPlayerStats(champ: Championship, player: Player) {
         showPlayerStatsList(champ, player)
     }
     
@@ -85,5 +87,9 @@ class Menu() {
         var champs = championships.filter { it != currentChamp }.toMutableList()
         
         showChampionshipsList(champs)
+    }
+    
+    fun showCarrerStats(championship: Championship, player: Player) {
+        showPlayerCarrerStatsList(championship, player)
     }
 }
